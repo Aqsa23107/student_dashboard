@@ -1,5 +1,11 @@
 <?php
-require_once __DIR__ ."/config.php";
+require_once __DIR__ . "/config.php";
+
+$errors = $_SESSION['errors'] ?? [];
+unset($_SESSION['errors']);
+
+$success = $_SESSION['success'] ?? null;
+unset($_SESSION['success']);
 
 
 ?>
@@ -33,7 +39,28 @@ require_once __DIR__ ."/config.php";
                 <h4 class="fw-bold mb-1">Create Account</h4>
                 <p class="text-muted small">Set up teacher / staff dashboard access</p>
             </div>
+            <?php if (!empty($errors)) { ?>
 
+                <div class="alert alert-danger">
+                    <ul>
+                        <?php foreach ($errors as $error) { ?>
+                            <li>
+                                <?= $error ?></li>
+                        <?php   } ?>
+                    </ul>
+
+                </div>
+
+            <?php } ?>
+
+
+            <?php if ($success) { ?>
+                <div class="alert alert-success">
+                    <?php echo $success ?>
+
+                </div>
+
+            <?php } ?>
 
             <form action="handle_register.php" method="POST">
                 <div class="mb-3">
