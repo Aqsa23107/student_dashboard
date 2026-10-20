@@ -18,7 +18,7 @@ if(empty($email) || empty($password)){
 
 
 if($password != $confirm_password){
-    $errors[] = "Password and confirm password are mismatched";
+    $errors[] = "Passwords do not match! Please try again.";
 }
 
 
@@ -45,10 +45,13 @@ if(mysqli_num_rows($result)>0){
     exit;
 }
 
+  $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
 
-$stmt2 = mysqli_prepare($conn, "INSERT INTO users (name,email,password) VALUES(?,?,?)");
-mysqli_stmt_bind_param($stmt2,"s,s,s",$name,$email,$password);
+
+
+$stmt2 = mysqli_prepare($conn, "INSERT INTO users (name,email,password,) VALUES(?,?,?)");
+mysqli_stmt_bind_param($stmt2,"ssss",$name,$email,$hashed_password,);
 mysqli_stmt_execute($stmt2);
 
 $_SESSION['success']="Account is sucessfully created";
