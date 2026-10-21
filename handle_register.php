@@ -12,6 +12,7 @@ $password = $_POST['password'];
 $confirm_password = $_POST['confirm_password'];
 
 
+
 if(empty($email) || empty($password)){
     $errors[]= "Email and password are required";
 }
@@ -47,11 +48,12 @@ if(mysqli_num_rows($result)>0){
 
   $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
+ $hashed_password;
 
 
 
-$stmt2 = mysqli_prepare($conn, "INSERT INTO users (name,email,password,) VALUES(?,?,?)");
-mysqli_stmt_bind_param($stmt2,"ssss",$name,$email,$hashed_password,);
+$stmt2 = mysqli_prepare($conn, "INSERT INTO users (name,email,password) VALUES(?,?,?)");
+mysqli_stmt_bind_param($stmt2,"sss",$name,$email,$hashed_password);
 mysqli_stmt_execute($stmt2);
 
 $_SESSION['success']="Account is sucessfully created";

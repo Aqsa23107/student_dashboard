@@ -12,6 +12,7 @@ $password = $_POST['password'];
 
 
 
+
 if(empty($email) || empty($password)){
     $errors[]= "Email and password are required";
 }
@@ -30,7 +31,7 @@ if(!empty($errors)){
    exit;
 }
 
-$stmt= mysqli_prepare($conn,"SELECT * FROM users WHERE email = ?");
+$stmt = mysqli_prepare($conn,"SELECT * FROM users WHERE email = ?");
 mysqli_stmt_bind_param($stmt,"s",$email);
 mysqli_stmt_execute($stmt);
 
@@ -47,13 +48,18 @@ if(mysqli_num_rows($result)==0){
 $user = mysqli_fetch_assoc($result);
 
 
-if(password_verify($password,$user['password']) ==false){
+
+
+if(password_verify($password,  $user['password']) ==false){
     $errors[]=  "wrong password";
-    header("Location:login.php");
+
+    
+    header("Location: login.php");
+
     exit;
 }
 
-$_SESSION['user_id'] = $user['user_id'];
+$_SESSION['id'] = $user['id'];
 header("Location: dashboard.php");
 exit;
 
