@@ -19,65 +19,10 @@
 
     <div class="app-container">
         <!-- Sidebar Navigation -->
-        <aside class="sidebar">
-            <a href="dashboard.html" class="sidebar-brand">
-                <i class="bi bi-mortarboard-fill fs-3 text-primary"></i>
-                <span>EduClass</span>
-            </a>
+        
+     <?php require_once __DIR__ ."/partials/sidebar.php"; ?>
 
-            <ul class="sidebar-menu">
-                <li class="nav-label">Main Menu</li>
-                <li>
-                    <a href="dashboard.html" class="nav-link">
-                        <i class="bi bi-grid-fill"></i>
-                        <span>Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="students.html" class="nav-link active">
-                        <i class="bi bi-people-fill"></i>
-                        <span>Students</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="student-create.html" class="nav-link">
-                        <i class="bi bi-person-plus-fill"></i>
-                        <span>Add Student</span>
-                    </a>
-                </li>
-                
-                <li class="nav-label mt-3">Administration</li>
-                <li>
-                    <a href="#" class="nav-link">
-                        <i class="bi bi-calendar3"></i>
-                        <span>Attendance</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="nav-link">
-                        <i class="bi bi-journal-check"></i>
-                        <span>Examinations</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="nav-link">
-                        <i class="bi bi-gear-fill"></i>
-                        <span>Settings</span>
-                    </a>
-                </li>
-            </ul>
 
-            <div class="sidebar-user">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=faces" class="avatar-sm" alt="Teacher">
-                <div class="flex-grow-1 overflow-hidden">
-                    <h6 class="mb-0 text-truncate fs-6 fw-semibold">Sarah Jenkins</h6>
-                    <small class="text-muted text-truncate d-block">Class Teacher</small>
-                </div>
-                <a href="login.html" class="text-danger p-1" title="Log Out">
-                    <i class="bi bi-box-arrow-right fs-5"></i>
-                </a>
-            </div>
-        </aside>
 
         <!-- Main Content Area -->
         <div class="main-wrapper">
@@ -124,7 +69,7 @@
                         <h4 class="fw-bold mb-1">Students Directory</h4>
                         <p class="text-muted small mb-0">View, search, and manage all registered class students</p>
                     </div>
-                    <a href="student-create.html" class="btn btn-primary d-inline-flex align-items-center gap-2">
+                    <a href="student-create.php" class="btn btn-primary d-inline-flex align-items-center gap-2">
                         <i class="bi bi-person-plus"></i>
                         <span>Add Student</span>
                     </a>
@@ -184,7 +129,7 @@
                                         <div class="d-flex align-items-center gap-2">
                                             <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=100&h=100&fit=crop&crop=faces" class="avatar-sm rounded-circle" alt="Alex">
                                             <div>
-                                                <a href="student-detail.html" class="fw-semibold text-dark text-decoration-none">Alex Rivera</a>
+                                                <a href="student-detail.php" class="fw-semibold text-dark text-decoration-none">Alex Rivera</a>
                                                 <div class="small text-muted">alex.r@school.edu</div>
                                             </div>
                                         </div>
@@ -232,7 +177,7 @@
                                         <div class="d-flex align-items-center gap-2">
                                             <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=faces" class="avatar-sm rounded-circle" alt="Liam">
                                             <div>
-                                                <a href="student-detail.html" class="fw-semibold text-dark text-decoration-none">Liam Vance</a>
+                                                <a href="student-detail.php" class="fw-semibold text-dark text-decoration-none">Liam Vance</a>
                                                 <div class="small text-muted">liam.v@school.edu</div>
                                             </div>
                                         </div>
@@ -268,7 +213,7 @@
                                     <td><span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">Active</span></td>
                                     <td class="text-end">
                                         <div class="d-inline-flex gap-1">
-                                            <a href="student-detail.html" class="btn btn-sm btn-light border p-1 px-2" title="View Profile"><i class="bi bi-eye"></i></a>
+                                            <a href="student-detail.php" class="btn btn-sm btn-light border p-1 px-2" title="View Profile"><i class="bi bi-eye"></i></a>
                                             <a href="student-edit.html" class="btn btn-sm btn-light border p-1 px-2" title="Edit Student"><i class="bi bi-pencil"></i></a>
                                             <button class="btn btn-sm btn-light border p-1 px-2 text-danger" data-bs-toggle="modal" data-bs-target="#deleteStudentModal" title="Delete"><i class="bi bi-trash"></i></button>
                                         </div>
