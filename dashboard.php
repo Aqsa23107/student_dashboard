@@ -138,7 +138,7 @@
                         </p>
                     </div>
                     <div class="d-flex gap-2">
-                        <a href="student-create.html" class="btn btn-primary d-inline-flex align-items-center gap-2">
+                        <a href="student-create.php" class="btn btn-primary d-inline-flex align-items-center gap-2">
                             <i class="bi bi-plus-lg"></i>
                             <span>Add New Student</span>
                         </a>
@@ -200,7 +200,7 @@
                         <div class="card-custom">
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <span class="fw-bold text-dark">Recently Enrolled Students</span>
-                                <a href="students.html" class="small text-primary text-decoration-none fw-semibold">View
+                                <a href="students.php" class="small text-primary text-decoration-none fw-semibold">View
                                     All</a>
                             </div>
                             <div class="table-responsive">

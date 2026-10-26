@@ -1,5 +1,42 @@
+<?php
+require_once __DIR__ . "/config.php";
+require_once __DIR__ . "/authcheck.php";
+require_once __DIR__ . "/db.php";
+
+$search = isset($_GET['search']) ? $_GET['search'] : '';
+$class = isset($_GET['class']) ? $_GET['class'] : '';
+$status = isset($_GET['status']) ? $_GET['status'] : '';
+
+
+
+$q = "SELECT * FROM students_info 
+	            INNER JOIN students_academics 
+                ON students_info.student_id = students_academics.students_id";
+
+if ($search != '') {
+    $q .= " WHERE (students_info.first_name ='$search' OR students_info.last_name = '$search' OR students_info.email='$search' OR students_academics.roll_number='$search')";
+}
+
+if ($class != '') {
+    $q .= " AND class='$class'";
+}
+if ($status != '') {
+    $q .= " AND status='$status'";
+}
+
+
+$result = mysqli_query($conn, $q);
+
+$data   = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,14 +52,12 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
+
 <body>
 
     <div class="app-container">
         <!-- Sidebar Navigation -->
-        
-     <?php require_once __DIR__ ."/partials/sidebar.php"; ?>
-
-
+        <?php require_once __DIR__ . "/partials/sidebar.php"; ?>
 
         <!-- Main Content Area -->
         <div class="main-wrapper">
@@ -34,7 +69,7 @@
                     </button>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb mb-0">
-                            <li class="breadcrumb-item"><a href="dashboard.html" class="text-decoration-none text-muted">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="dashboard.php" class="text-decoration-none text-muted">Dashboard</a></li>
                             <li class="breadcrumb-item active" aria-current="page">Students</li>
                         </ol>
                     </nav>
@@ -54,8 +89,10 @@
                         <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0" aria-labelledby="userMenu">
                             <li><a class="dropdown-item py-2" href="#"><i class="bi bi-person me-2"></i>My Profile</a></li>
                             <li><a class="dropdown-item py-2" href="#"><i class="bi bi-sliders me-2"></i>Preferences</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item py-2 text-danger" href="login.html"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item py-2 text-danger" href="login.php"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
                         </ul>
                     </div>
                 </div>
@@ -77,35 +114,40 @@
 
                 <!-- Filters & Search Toolbar -->
                 <div class="card-custom p-3 mb-4">
-                    <div class="row g-3">
-                        <div class="col-12 col-md-5">
-                            <div class="input-group">
-                                <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
-                                <input type="text" class="form-control border-start-0 ps-0" placeholder="Search by name, email or roll...">
+                    <form  method="GET">
+                        <div class="row g-3">
+                            <div class="col-12 col-md-5">
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
+                                    <input type="text" name="search" value="<?= $search ?>" class="form-control border-start-0 ps-0" placeholder="Search by name, email or roll...">
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <select name="class" class="form-select">
+                                    <option value="">All Classes</option>
+                                    <option value="10-A">Grade 10-A</option>
+                                    <option value="10-B">Grade 10-B</option>
+                                    <option value="11-A">Grade 11-A</option>
+                                </select>
+                            </div>
+                            <div class="col-6 col-md-2">
+                                <select name="status" class="form-select">
+                                    <option  value="">All Statuses</option>
+                                    <option value="active">Active</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="inactive">Inactive</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-md-2 d-grid">
+                                <button type="submit" class="btn btn-outline-secondary d-flex align-items-center justify-content-center gap-1">
+                                    <i class="bi bi-arrow-clockwise"></i> Search
+                                </button>
+                                <a href="?" class="btn btn-outline-secondary d-flex align-items-center justify-content-center gap-1">
+                                    <i class="bi bi-arrow-clockwise"></i> Refresh
+                                </a>
                             </div>
                         </div>
-                        <div class="col-6 col-md-3">
-                            <select class="form-select">
-                                <option value="">All Classes</option>
-                                <option value="10-A">Grade 10-A</option>
-                                <option value="10-B">Grade 10-B</option>
-                                <option value="11-A">Grade 11-A</option>
-                            </select>
-                        </div>
-                        <div class="col-6 col-md-2">
-                            <select class="form-select">
-                                <option value="">All Statuses</option>
-                                <option value="active">Active</option>
-                                <option value="pending">Pending</option>
-                                <option value="inactive">Inactive</option>
-                            </select>
-                        </div>
-                        <div class="col-12 col-md-2 d-grid">
-                            <button class="btn btn-outline-secondary d-flex align-items-center justify-content-center gap-1">
-                                <i class="bi bi-arrow-clockwise"></i> Reset
-                            </button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
 
                 <!-- Students Table Card -->
@@ -124,149 +166,39 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center gap-2">
-                                            <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=100&h=100&fit=crop&crop=faces" class="avatar-sm rounded-circle" alt="Alex">
-                                            <div>
-                                                <a href="student-detail.php" class="fw-semibold text-dark text-decoration-none">Alex Rivera</a>
-                                                <div class="small text-muted">alex.r@school.edu</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td><span class="badge bg-light text-dark border">#1024</span></td>
-                                    <td>Grade 10-A</td>
-                                    <td>Male</td>
-                                    <td>+1 (555) 234-5678</td>
-                                    <td><span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">Active</span></td>
-                                    <td class="text-end">
-                                        <div class="d-inline-flex gap-1">
-                                            <a href="student-detail.html" class="btn btn-sm btn-light border p-1 px-2" title="View Profile"><i class="bi bi-eye"></i></a>
-                                            <a href="student-edit.html" class="btn btn-sm btn-light border p-1 px-2" title="Edit Student"><i class="bi bi-pencil"></i></a>
-                                            <button class="btn btn-sm btn-light border p-1 px-2 text-danger" data-bs-toggle="modal" data-bs-target="#deleteStudentModal" title="Delete"><i class="bi bi-trash"></i></button>
-                                        </div>
-                                    </td>
-                                </tr>
+                                <?php if (mysqli_num_rows($result) == 0) { ?>
+                                    <tr>
+                                        <td colspan="7">No students found</td>
+                                    </tr>
+                                <?php } ?>
 
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center gap-2">
-                                            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&h=100&fit=crop&crop=faces" class="avatar-sm rounded-circle" alt="Emma">
-                                            <div>
-                                                <a href="student-detail.html" class="fw-semibold text-dark text-decoration-none">Emma Watson</a>
-                                                <div class="small text-muted">emma.w@school.edu</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td><span class="badge bg-light text-dark border">#1025</span></td>
-                                    <td>Grade 10-A</td>
-                                    <td>Female</td>
-                                    <td>+1 (555) 345-6789</td>
-                                    <td><span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">Active</span></td>
-                                    <td class="text-end">
-                                        <div class="d-inline-flex gap-1">
-                                            <a href="student-detail.html" class="btn btn-sm btn-light border p-1 px-2" title="View Profile"><i class="bi bi-eye"></i></a>
-                                            <a href="student-edit.html" class="btn btn-sm btn-light border p-1 px-2" title="Edit Student"><i class="bi bi-pencil"></i></a>
-                                            <button class="btn btn-sm btn-light border p-1 px-2 text-danger" data-bs-toggle="modal" data-bs-target="#deleteStudentModal" title="Delete"><i class="bi bi-trash"></i></button>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center gap-2">
-                                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=faces" class="avatar-sm rounded-circle" alt="Liam">
-                                            <div>
-                                                <a href="student-detail.php" class="fw-semibold text-dark text-decoration-none">Liam Vance</a>
-                                                <div class="small text-muted">liam.v@school.edu</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td><span class="badge bg-light text-dark border">#1026</span></td>
-                                    <td>Grade 10-B</td>
-                                    <td>Male</td>
-                                    <td>+1 (555) 456-7890</td>
-                                    <td><span class="badge bg-warning-subtle text-warning border border-warning-subtle px-2 py-1">Pending</span></td>
-                                    <td class="text-end">
-                                        <div class="d-inline-flex gap-1">
-                                            <a href="student-detail.html" class="btn btn-sm btn-light border p-1 px-2" title="View Profile"><i class="bi bi-eye"></i></a>
-                                            <a href="student-edit.html" class="btn btn-sm btn-light border p-1 px-2" title="Edit Student"><i class="bi bi-pencil"></i></a>
-                                            <button class="btn btn-sm btn-light border p-1 px-2 text-danger" data-bs-toggle="modal" data-bs-target="#deleteStudentModal" title="Delete"><i class="bi bi-trash"></i></button>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center gap-2">
-                                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=faces" class="avatar-sm rounded-circle" alt="Sophia">
-                                            <div>
-                                                <a href="student-detail.html" class="fw-semibold text-dark text-decoration-none">Sophia Martinez</a>
-                                                <div class="small text-muted">sophia.m@school.edu</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td><span class="badge bg-light text-dark border">#1027</span></td>
-                                    <td>Grade 10-A</td>
-                                    <td>Female</td>
-                                    <td>+1 (555) 567-8901</td>
-                                    <td><span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">Active</span></td>
-                                    <td class="text-end">
-                                        <div class="d-inline-flex gap-1">
-                                            <a href="student-detail.php" class="btn btn-sm btn-light border p-1 px-2" title="View Profile"><i class="bi bi-eye"></i></a>
-                                            <a href="student-edit.html" class="btn btn-sm btn-light border p-1 px-2" title="Edit Student"><i class="bi bi-pencil"></i></a>
-                                            <button class="btn btn-sm btn-light border p-1 px-2 text-danger" data-bs-toggle="modal" data-bs-target="#deleteStudentModal" title="Delete"><i class="bi bi-trash"></i></button>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center gap-2">
-                                            <div class="avatar-sm avatar-placeholder">DH</div>
-                                            <div>
-                                                <a href="student-detail.html" class="fw-semibold text-dark text-decoration-none">David Harris</a>
-                                                <div class="small text-muted">david.h@school.edu</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td><span class="badge bg-light text-dark border">#1028</span></td>
-                                    <td>Grade 10-B</td>
-                                    <td>Male</td>
-                                    <td>+1 (555) 678-9012</td>
-                                    <td><span class="badge bg-danger-subtle text-danger border border-danger-subtle px-2 py-1">Inactive</span></td>
-                                    <td class="text-end">
-                                        <div class="d-inline-flex gap-1">
-                                            <a href="student-detail.html" class="btn btn-sm btn-light border p-1 px-2" title="View Profile"><i class="bi bi-eye"></i></a>
-                                            <a href="student-edit.html" class="btn btn-sm btn-light border p-1 px-2" title="Edit Student"><i class="bi bi-pencil"></i></a>
-                                            <button class="btn btn-sm btn-light border p-1 px-2 text-danger" data-bs-toggle="modal" data-bs-target="#deleteStudentModal" title="Delete"><i class="bi bi-trash"></i></button>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center gap-2">
-                                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&crop=faces" class="avatar-sm rounded-circle" alt="Olivia">
-                                            <div>
-                                                <a href="student-detail.html" class="fw-semibold text-dark text-decoration-none">Olivia Chen</a>
-                                                <div class="small text-muted">olivia.c@school.edu</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td><span class="badge bg-light text-dark border">#1029</span></td>
-                                    <td>Grade 10-A</td>
-                                    <td>Female</td>
-                                    <td>+1 (555) 789-0123</td>
-                                    <td><span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">Active</span></td>
-                                    <td class="text-end">
-                                        <div class="d-inline-flex gap-1">
-                                            <a href="student-detail.html" class="btn btn-sm btn-light border p-1 px-2" title="View Profile"><i class="bi bi-eye"></i></a>
-                                            <a href="student-edit.html" class="btn btn-sm btn-light border p-1 px-2" title="Edit Student"><i class="bi bi-pencil"></i></a>
-                                            <button class="btn btn-sm btn-light border p-1 px-2 text-danger" data-bs-toggle="modal" data-bs-target="#deleteStudentModal" title="Delete"><i class="bi bi-trash"></i></button>
-                                        </div>
-                                    </td>
-                                </tr>
+                                <?php if (mysqli_num_rows($result) > 0) { ?>
+                                    <?php foreach ($data as $student) { ?>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=100&h=100&fit=crop&crop=faces" class="avatar-sm rounded-circle" alt="Alex">
+                                                    <div>
+                                                        <a href="student-detail.php" class="fw-semibold text-dark text-decoration-none"><?= $student['first_name'] . ' ' . $student['last_name'] ?></a>
+                                                        <div class="small text-muted"><?= $student['email'] ?></div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-light text-dark border"><?= $student['roll_number'] ?></span></td>
+                                            <td><?= $student['class'] ?></td>
+                                            <td><?= $student['gender'] ?></td>
+                                            <td><?php echo $student['phone']; ?></td>
+                                            <td><span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1"><?= $student['status'] ?></span></td>
+                                            <td class="text-end">
+                                                <div class="d-inline-flex gap-1">
+                                                    <a href="student-detail.php" class="btn btn-sm btn-light border p-1 px-2" title="View Profile"><i class="bi bi-eye"></i></a>
+                                                    <a href="student-edit.php" class="btn btn-sm btn-light border p-1 px-2" title="Edit Student"><i class="bi bi-pencil"></i></a>
+                                                    <button class="btn btn-sm btn-light border p-1 px-2 text-danger" data-bs-toggle="modal" data-bs-target="#deleteStudentModal" title="Delete"><i class="bi bi-trash"></i></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+                                <?php } ?>
                             </tbody>
                         </table>
                     </div>
@@ -313,4 +245,5 @@
     <!-- Custom JS -->
     <script src="assets/js/main.js"></script>
 </body>
+
 </html>

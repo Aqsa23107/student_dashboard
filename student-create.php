@@ -47,15 +47,15 @@ unset($_SESSION['success']);
                     </button>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb mb-0">
-                            <li class="breadcrumb-item"><a href="dashboard.html" class="text-decoration-none text-muted">Dashboard</a></li>
-                            <li class="breadcrumb-item"><a href="students.html" class="text-decoration-none text-muted">Students</a></li>
+                            <li class="breadcrumb-item"><a href="dashboard.php" class="text-decoration-none text-muted">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="students.php" class="text-decoration-none text-muted">Students</a></li>
                             <li class="breadcrumb-item active" aria-current="page">Add Student</li>
                         </ol>
                     </nav>
                 </div>
 
                 <div class="d-flex align-items-center gap-3">
-                    <a href="students.html" class="btn btn-sm btn-outline-secondary d-none d-sm-inline-flex align-items-center gap-1">
+                    <a href="students.php" class="btn btn-sm btn-outline-secondary d-none d-sm-inline-flex align-items-center gap-1">
                         <i class="bi bi-arrow-left"></i> Back to List
                     </a>
                 </div>
@@ -169,7 +169,7 @@ unset($_SESSION['success']);
 
                             <!-- Action Buttons -->
                             <div class="d-flex align-items-center justify-content-end gap-2 mb-5">
-                                <a href="students.html" class="btn btn-light border px-4">Cancel</a>
+                                <a href="students.php" class="btn btn-light border px-4">Cancel</a>
                                 <button type="submit" class="btn btn-primary px-4 d-inline-flex align-items-center gap-2">
                                     <i class="bi bi-check-lg"></i>
                                     <span>Save Student</span>
