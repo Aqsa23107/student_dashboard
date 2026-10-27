@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         empty($first_name) || empty($last_name) || empty($email) || empty($phone) || empty($roll_number) ||
         empty($class) || empty($gender) || empty($dob) || empty($status)
     ) {
-        $errors = ["All fields are required"];
+        $errors = ["All fields are requireds"];
     }
 
 
@@ -41,6 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         header("Location:student-create.php");
         exit();
     }
+
 
     $stmt = mysqli_prepare($conn, "INSERT INTO students_info (first_name,last_name,email,phone) VALUES(?,?,?,?)");
     mysqli_stmt_bind_param($stmt, "ssss", $first_name, $last_name, $email, $phone);
@@ -56,4 +57,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $_SESSION['success'] = "Student record created sucessfully";
     header("Location:student-create.php");
     exit();
+
+    
+
+
+
+
+
+
+
+
 }
