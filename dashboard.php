@@ -24,7 +24,7 @@
     <div class="app-container">
         <!-- Sidebar Navigation -->
         <aside class="sidebar">
-            <a href="dashboard.html" class="sidebar-brand">
+            <a href="dashboard.php" class="sidebar-brand">
                 <i class="bi bi-mortarboard-fill fs-3 text-primary"></i>
                 <span>EduClass</span>
             </a>
@@ -32,13 +32,13 @@
             <ul class="sidebar-menu">
                 <li class="nav-label">Main Menu</li>
                 <li>
-                    <a href="dashboard.html" class="nav-link active">
+                    <a href="dashboard.php" class="nav-link active">
                         <i class="bi bi-grid-fill"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
                 <li>
-                    <a href="students.html" class="nav-link">
+                    <a href="students.php" class="nav-link">
                         <i class="bi bi-people-fill"></i>
                         <span>Students</span>
                     </a>

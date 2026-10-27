@@ -1,3 +1,35 @@
+<?php
+require_once __DIR__ ."/config.php";
+require_once __DIR__ ."/db.php";
+ require_once __DIR__ . "/authcheck.php"; 
+
+ $errors=[];
+
+ $students_id =$_GET['id'];
+
+if(empty($students_id)){
+    $errors[]="student id is required";
+
+}
+
+if(!empty($errors)){
+    $_SESSION['errors'] =$errors;
+   header("Location:students.php");
+   exit;
+}
+
+$q = "SELECT * FROM students_info 
+	            INNER JOIN students_academics 
+                ON students_info.student_id = students_academics.students_id
+                WHERE student_info.student_id =$students_id";
+
+
+
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

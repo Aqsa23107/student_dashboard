@@ -7,7 +7,11 @@ $search = isset($_GET['search']) ? $_GET['search'] : '';
 $class = isset($_GET['class']) ? $_GET['class'] : '';
 $status = isset($_GET['status']) ? $_GET['status'] : '';
 
+$errors = $_SESSION['errors'] ?? [];
+unset($_SESSION['errors']);
 
+$sucess = $_SESSION['success'] ?? null;
+unset($_SESSION['success']);
 
 $q = "SELECT * FROM students_info 
 	            INNER JOIN students_academics 
@@ -97,6 +101,13 @@ $data   = mysqli_fetch_all($result, MYSQLI_ASSOC);
                     </div>
                 </div>
             </header>
+
+
+            <?php  
+            
+            //($_SESSION['errors']);
+            
+            ?>
 
             <!-- Students List Page Body -->
             <main class="content-body">
@@ -193,8 +204,7 @@ $data   = mysqli_fetch_all($result, MYSQLI_ASSOC);
                                                 <div class="d-inline-flex gap-1">
                                                     <a href="student-detail.php" class="btn btn-sm btn-light border p-1 px-2" title="View Profile"><i class="bi bi-eye"></i></a>
                                                     <a href="student-edit.php" class="btn btn-sm btn-light border p-1 px-2" title="Edit Student"><i class="bi bi-pencil"></i></a>
-                                                    <button class="btn btn-sm btn-light border p-1 px-2 text-danger" data-bs-toggle="modal" data-bs-target="#deleteStudentModal" title="Delete"><i class="bi bi-trash"></i></button>
-                                                </div>
+                                                    <a href="handle_delete.php?id=<?= $student['students_id'] ?>" class="btn btn-sm btn-light border p-1 px-2 text-danger" title="Delete"><i class="bi bi-trash"></i></a>
                                             </td>
                                         </tr>
                                     <?php } ?>
