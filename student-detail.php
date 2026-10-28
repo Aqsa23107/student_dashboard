@@ -41,7 +41,7 @@
                 </div>
 
                 <div class="d-flex align-items-center gap-2">
-                    <a href="student-edit.html" class="btn btn-sm btn-primary d-inline-flex align-items-center gap-1">
+                    <a href="student-edit.php" class="btn btn-sm btn-primary d-inline-flex align-items-center gap-1">
                         <i class="bi bi-pencil"></i> Edit Student
                     </a>
                     <a href="students.html" class="btn btn-sm btn-light border d-inline-flex align-items-center gap-1">
